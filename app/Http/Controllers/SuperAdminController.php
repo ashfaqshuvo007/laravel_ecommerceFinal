@@ -188,7 +188,9 @@ class SuperAdminController extends Controller {
 		$data['category_id'] = $request->category_id;
 		$data['manufacturer_id'] = $request->manufacturer_id;
 		$data['product_description'] = $request->product_description;
-		$data['product_price'] = $request->product_price;
+		$data['old_price'] = $request->old_price;
+		$data['new_price'] = $request->new_price;
+
 		$data['product_quantity'] = $request->product_quantity;
 		if ($request->is_featured == "on") {
 			$data['is_featured'] = 1;
@@ -282,7 +284,8 @@ class SuperAdminController extends Controller {
 		$data['category_id'] = $request->category_id;
 		$data['manufacturer_id'] = $request->manufacturer_id;
 		$data['product_description'] = $request->product_description;
-		$data['product_price'] = $request->product_price;
+		$data['old_price'] = $request->old_price;
+		$data['new_price'] = $request->new_price;
 		$data['product_quantity'] = $request->product_quantity;
 		//$data['product_image'] = $request->product_image;
 		$data['publication_status'] = $request->publication_status;

@@ -87,8 +87,12 @@ $sub_cat = DB::table('category')
                             <textarea class="form-control ckeditor" name="product_description" rows="3"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="name">Product Price</label>
-                            <input type="number" class="form-control" name="product_price">
+                            <label for="name">Old Price</label>
+                            <input type="number" class="form-control" name="old_price">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">New Price</label>
+                            <input type="number" class="form-control" name="new_price">
                         </div>
                         <div class="form-group">
                             <label for="name">Product Quantity</label>

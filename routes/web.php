@@ -12,6 +12,12 @@
  */
 
 Route::get('/', 'WelcomeController@index');
+Route::get('/category/{id}', 'WelcomeController@category');
+Route::get('/product-detail/{id}', 'WelcomeController@product_detail');
+
+/*Cart ROUTES*/
+Route::post('/add-to-cart', 'CartController@add_to_cart');
+Route::get('show-cart', 'CartController@show_cart');
 
 /*Admin Routes*/
 Route::get('/admin-panel', 'AdminController@index');

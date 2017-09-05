@@ -25,7 +25,8 @@
                             <th class="text-center"><i class="icon_calendar"></i> Product Image</th>
                             <th class="text-center"><i class="icon_calendar"></i> Product Category</th>
                             <th class="text-center"><i class="icon_calendar"></i> Product Manufacturer</th>
-                            <th class="text-center"><i class="icon_calendar"></i> Price(in BDT)</th>
+                            <th class="text-center"><i class="icon_calendar"></i> New Price(in BDT)</th>
+                            <th class="text-center"><i class="icon_calendar"></i> Old Price(in BDT)</th>
                             <th class="text-center"><i class="icon_calendar"></i> Product Quantity</th>
                             <th class="text-center"><i class="icon_mail_alt"></i> Status</th>
                             <th class="text-center"><i class="icon_cogs"></i> Action</th>
@@ -39,7 +40,8 @@
                             <td class="text-center"><img src="{{asset($v_product->product_image)}}" alt="pro_image" width="100"></td>
                             <td class="text-center">{{ $v_product->category_id }}</td>
                             <td class="text-center">{{ $v_product->manufacturer_id }}</td>
-                            <td class="text-center">{{ $v_product->product_price }}</td>
+                            <td class="text-center">{{ $v_product->new_price }}</td>
+                            <td class="text-center">{{ $v_product->old_price }}</td>
                             <td class="text-center">{{ $v_product->product_quantity }}</td>
                             <td class="text-center">
                                @if ($v_product->publication_status == 1)

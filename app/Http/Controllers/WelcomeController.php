@@ -25,4 +25,32 @@ class WelcomeController extends Controller {
 			->with('all_product_info', $product_info)
 			->with('pro_by_cat', $pro_by_cat);
 	}
+
+	public function category($id) {
+
+		$pro_by_cat = DB::table('product')
+			->where('category_id', $id)
+			->get();
+		$cat_info = DB::table('category')
+			->where('category_id', $id)
+			->first();
+		$all_cat = DB::table('category')->get();
+
+		return view('category')
+			->with('pro_by_cat_info', $pro_by_cat)
+			->with('cat_info', $cat_info)
+			->with('all_cat', $all_cat);
+
+	}
+	public function product_detail($id) {
+		$product_details = DB::table('product')
+			->where('product_id', $id)
+			->first();
+
+		$all_cat_info = DB::table('category')->get();
+
+		return view('product_detail')
+			->with('all_cat', $all_cat_info)
+			->with('pro_detail', $product_details);
+	}
 }

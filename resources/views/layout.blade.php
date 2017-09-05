@@ -164,6 +164,7 @@
                     @foreach($all_cat_info as $v_cat)
                           @if($v_cat->parent_id == 0)
                           <ul class="vertical-menu-list">
+
 <?php
 $sub_cat = DB::table('category')
 	->where('parent_id', $v_cat->category_id)
@@ -171,14 +172,14 @@ $sub_cat = DB::table('category')
 
 ?>
                             <li>
-                                <a href="#" class="parent"> {{ $v_cat->category_name}}</a>
+                                <a href="{{URL::to('/category/'.$v_cat->category_id)}}" class="parent"> {{ $v_cat->category_name}}</a>
                                <div class="vertical-dropdown-menu">
                                         <div class="vertical-groups col-sm-12">
                                             <div class="mega-group col-sm-4">
-                                              <ul class="group-link-default">
+                                              <ul class="group-link-default" >
                                                 @foreach($sub_cat as $v_sub_cat)
                                                 <li>
-                                                        <a href="#"> {{ $v_sub_cat->category_name }}</a>
+                                                        <a href="{{URL::to('/category/'.$v_sub_cat->category_id)}}"> {{ $v_sub_cat->category_name }}</a>
                                                 </li>
                                                 @endforeach
                                               </ul>
@@ -206,14 +207,14 @@ $sub_cat = DB::table('category')
                             <div id="navbar" class="navbar-collapse collapse">
                                 <ul class="nav navbar-nav">
 
-                                    <li class="active"><a href="#">Home</a></li>
+                                    <li class="active"><a href="{{URL::to('/')}}">Home</a></li>
                                     @foreach($all_cat_info as $v_cat)
                                       @if($v_cat->parent_id == 0)
 
 
                                         <li>
-                                          <a href="category.html" class="dropdown-toggle" data-toggle="dropdown">{{ $v_cat->category_name }}</a>
-                                          <ul class="dropdown-menu mega_dropdown" role="menu" style="width: 830px;">
+                                          <a href=" {{URL::to('/category/'.$v_cat->category_id)}} " class="dropdown-toggle" data-toggle="dropdown">{{ $v_cat->category_name }}</a>
+                                          <ul class="dropdown-menu mega_dropdown" role="menu" style="width: 300px;">
                                               <li class="block-container col-sm-3">
                                                   <ul class="block">
 <?php
@@ -223,7 +224,7 @@ $sub_cat = DB::table('category')
 
 ?>
                                                       @foreach($sub_cat as $v_sub_cat)
-                                                      <li class="link_container"><a href="#">{{ $v_sub_cat->category_name}}</a>
+                                                      <li class="link_container"><a href="{{URL::to('/category/'.$v_sub_cat->category_id)}}">{{ $v_sub_cat->category_name}}</a>
                                                       </li>
                                                       @endforeach
                                                   </ul>
@@ -372,14 +373,14 @@ $new_product = DB::table('product')
                                             </div>
                                             <div class="group-price">
                                                 <span class="product-new">NEW</span>
-                                                <span class="product-sale">Sale</span>
+                                                <!-- <span class="product-sale">Sale</span> -->
                                             </div>
                                         </div>
                                         <div class="right-block">
                                             <h5 class="product-name"><a href="#">{{ $v_new->product_name}}</a></h5>
                                             <div class="content_price">
-                                                <span class="price product-price">$38,95</span>
-                                                <span class="price old-price">$52,00</span>
+                                                <span class="price product-price">BDT {{ $v_new->new_price}}</span>
+                                                <span class="price old-price">BDT {{ $v_new->old_price}}</span>
                                             </div>
                                             <div class="product-star">
                                                 <i class="fa fa-star"></i>
@@ -541,7 +542,7 @@ $new_product = DB::table('product')
                                           <div class="right-block">
                                               <h5 class="product-name"><a href="#">{{ $v_pro->product_name}}</a></h5>
                                               <div class="content_price">
-                                                  <span class="price product-price">{{ $v_pro->product_price}}</span>
+                                                  <span class="price product-price">BDT {{ $v_pro->new_price}}</span>
 
                                               </div>
                                               <div class="product-star">

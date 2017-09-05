@@ -41,13 +41,24 @@ if ($message) {
                             <input type="hidden" class="form-control" name="product_id"  value="{{$product_info->product_id }}">
                         </div>
                         <div class="form-group">
-                            <label for="name">Select Category</label>
+                            <label for="name">Parent Category</label>
                             <select class="form-control" name="category_id">
-                                <option value="0">Select Category</option>
+                                <option value="0">Select Parent</option>
                                 @foreach($category_info as $c_info)
-                                <option value="{{ $c_info->category_id}}">
-                                    {{$c_info->category_name}}
-                                </option>
+                                    @if($c_info->parent_id == 0)
+                                        <option value="{{ $c_info->category_id}}">
+                                            {{$c_info->category_name}}
+                                        </option>
+<?php
+$sub_cat = DB::table('category')
+	->where('parent_id', $c_info->category_id)
+	->get();
+?>
+                                        @foreach($sub_cat as $v_sub_cat)
+                                            <option value="{{ $v_sub_cat->category_id}}">---{{$v_sub_cat->category_name}}</option>
+                                        @endforeach
+
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
@@ -64,8 +75,12 @@ if ($message) {
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="name">Product Price</label>
-                            <input type="number" class="form-control" name="product_price" value="{{$product_info->product_price}}">
+                            <label for="name">Old Price</label>
+                            <input type="number" class="form-control" name="old_price" value="{{$product_info->old_price}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">New Price</label>
+                            <input type="number" class="form-control" name="new_price" value="{{$product_info->new_price}}">
                         </div>
                         <div class="form-group">
                             <label for="name">Product Quantity</label>

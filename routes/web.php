@@ -13,11 +13,17 @@
 
 Route::get('/', 'WelcomeController@index');
 Route::get('/category/{id}', 'WelcomeController@category');
-Route::get('/product-detail/{id}', 'WelcomeController@product_detail');
+Route::get('/product-details/{id}', 'WelcomeController@product_details');
 
 /*Cart ROUTES*/
 Route::post('/add-to-cart', 'CartController@add_to_cart');
 Route::get('show-cart', 'CartController@show_cart');
+Route::post('/update-cart', 'CartController@update_cart');
+Route::get('/delete-to-cart/{id}', 'CartController@delete_to_cart');
+Route::get('/empty-cart', 'CartController@empty_cart');
+
+/*CHECKOUT routes */
+Route::get('/checkout', 'CheckoutController@checkout');
 
 /*Admin Routes*/
 Route::get('/admin-panel', 'AdminController@index');

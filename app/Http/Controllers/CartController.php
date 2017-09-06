@@ -44,43 +44,27 @@ class CartController extends Controller {
 		return view('cart')->with('all_cat', $all_cat_info);
 	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function create() {
+	public function update_cart(Request $request) {
+		$rowid = $request->rowid;
+		$qty = $request->qty;
+
+		Cart::update($rowid, $qty);
+
+		return Redirect::to('show-cart');
+
 		//
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @return \Illuminate\Http\Response
-	 */
-	public function store(Request $request) {
-		//
+	public function delete_to_cart($rowid) {
+		Cart::remove($rowid);
+
+		// Session::put('message', 'You have deleted one Item from your Cart');
+		return Redirect::to('show-cart');
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function show($id) {
-		//
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function edit($id) {
-		//
+	public function empty_cart() {
+		Cart::destroy();
+		return Redirect::to('/');
 	}
 
 	/**

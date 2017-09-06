@@ -79,74 +79,66 @@
     <div class="container main-header">
         <div class="row">
             <div class="col-xs-12 col-sm-3 logo">
-                <a href="index.html"><img alt="Kute shop - themelot.net" src="{{URL::to('public/theme_assets/images/logo.png')}}" /></a>
+                <a href="{{URL::to('/')}}"><img alt="Kute shop - themelot.net" src="{{URL::to('public/theme_assets/images/logo.png')}}" /></a>
             </div>
             <div class="col-xs-7 col-sm-7 header-search-box">
                 <form class="form-inline">
-                      <div class="form-group form-category">
+                      <!-- <div class="form-group form-category">
                         <select class="select-category">
                             <option value="2">All Categories</option>
                             <option value="1">Men</option>
                             <option value="2">Women</option>
                         </select>
-                      </div>
+                      </div> -->
                       <div class="form-group input-serach">
                         <input type="text"  placeholder="Keyword here...">
                       </div>
                       <button type="submit" class="pull-right btn-search"></button>
                 </form>
             </div>
-            <div id="cart-block" class="col-xs-5 col-sm-2 shopping-cart-box">
-                <a class="cart-link" href="order.html">
+
+
+            <?php $cart_contents = Cart::content();?>
+
+
+  <div id="cart-block" class="col-xs-5 col-sm-2 shopping-cart-box">
+                <a class="cart-link" href="{{URL::to('/show-cart')}}">
                     <span class="title">Shopping cart</span>
-                    <span class="total">2 items - 122.38 €</span>
-                    <span class="notify notify-left">2</span>
+                    <span class="total">{{ $cart_contents->count() }} -- BDT {{ Cart::total() }}</span>
+                    <span class="notify notify-left">{{ $cart_contents->count() }}</span>
                 </a>
                 <div class="cart-block">
                     <div class="cart-block-content">
-                        <h5 class="cart-title">2 Items in my cart</h5>
+                        <h5 class="cart-title"> {{$cart_contents->count() }} Items in my cart</h5>
                         <div class="cart-block-list">
                             <ul>
+                                @foreach($cart_contents as $v_content)
                                 <li class="product-info">
                                     <div class="p-left">
-                                        <a href="#" class="remove_link"></a>
-                                        <a href="#">
-                                        <img class="img-responsive" src="{{URL::to('public/theme_assets/data/product-100x122.jpg" alt="p10')}}">
+                                        <a href="{{URL::to('/delete-to-cart/'.$v_content->rowId)}}" class="remove_link"></a>
+                                        <a href="{{URL::to('/show-cart')}}">
+                                        <img class="img-responsive" src="{{  asset($v_content->options->image) }}" alt="p10">
                                         </a>
                                     </div>
                                     <div class="p-right">
-                                        <p class="p-name">Donec Ac Tempus</p>
-                                        <p class="p-rice">61,19 €</p>
-                                        <p>Qty: 1</p>
+                                        <p class="p-name">{{ $v_content->name }}</p>
+                                        <p class="p-rice">BDT {{ $v_content->price }}</p>
                                     </div>
                                 </li>
-                                <li class="product-info">
-                                    <div class="p-left">
-                                        <a href="#" class="remove_link"></a>
-                                        <a href="#">
-                                        <img class="img-responsive" src="{{URL::to('public/theme_assets/data/product-s5-100x122.jpg')}}" alt="p10">
-                                        </a>
-                                    </div>
-                                    <div class="p-right">
-                                        <p class="p-name">Donec Ac Tempus</p>
-                                        <p class="p-rice">61,19 €</p>
-                                        <p>Qty: 1</p>
-                                    </div>
-                                </li>
+                                @endforeach
                             </ul>
                         </div>
                         <div class="toal-cart">
                             <span>Total</span>
-                            <span class="toal-price pull-right">122.38 €</span>
+                            <span class="toal-price pull-right">BDT {{ Cart::total() }}</span>
                         </div>
                         <div class="cart-buttons">
-                            <a href="order.html" class="btn-check-out">Checkout</a>
+                            <a href="{{URL::to('/checkout')}}" class="btn-check-out">Checkout</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
     <!-- END MANIN HEADER -->
     <div id="nav-top-menu" class="nav-top-menu">
@@ -274,7 +266,8 @@ $featured_product = DB::table('product')
 ?>
                           @foreach($featured_product as $v_feat_pro)
                           <li>
-                            <img alt="Funky roots" src="{{ $v_feat_pro->product_image }}" title="Funky roots" />
+
+                            <a href="{{ URL::to('/product-details/'.$v_feat_pro->product_id) }}"><img alt="Funky roots" src="{{ $v_feat_pro->product_image }}" title="Funky roots" /></a>
                           </li>
 
                           @endforeach
@@ -360,7 +353,7 @@ $new_product = DB::table('product')
 
                                     <li>
                                         <div class="left-block">
-                                            <a href="#">
+                                            <a href="{{URL::to('/product-details/'.$v_new->product_id)}}">
                                                 <img class="img-responsive" alt="product" src="{{ $v_new->product_image }}" />
                                             </a>
                                             <div class="quick-view">
@@ -368,9 +361,18 @@ $new_product = DB::table('product')
                                                     <a title="Add to compare" class="compare" href="#"></a>
                                                     <a title="Quick view" class="search" href="#"></a>
                                             </div>
-                                            <div class="add-to-cart">
-                                                <a title="Add to Cart" href="#">Add to Cart</a>
-                                            </div>
+                                            <form action="{{ URL::to('/add-to-cart') }}" method="POST" role="form">
+                                                {{ csrf_field() }}
+
+                                                <div class="add-to-cart">
+                                                    <input type="hidden" name="product_id" value="{{ $v_new->product_id}}">
+                                                    <input type="hidden" name="qty" value="1">
+                                                <button  type="submit">
+                                                    <a title="Add to Cart">Add to Cart</a>
+                                               </button>
+                                                </div>
+
+                                            </form>
                                             <div class="group-price">
                                                 <span class="product-new">NEW</span>
                                                 <!-- <span class="product-sale">Sale</span> -->
@@ -476,7 +478,7 @@ $new_product = DB::table('product')
             <nav class="navbar nav-menu nav-menu-red show-brand">
               <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
-                  <div class="navbar-brand"><a href="#"><img alt="fashion" src="{{URL::to('public/theme_assets/data/fashion.png')}}" />{{$v_cat->category_name}}</a></div>
+                  <div class="navbar-brand"><a href="#">{{$v_cat->category_name}}</a></div>
                   <span class="toggle-menu"></span>
             <?php $sub_cat = DB::table('category')->where('parent_id', $v_cat->category_id)->get()?>
 
@@ -528,16 +530,26 @@ $new_product = DB::table('product')
 
                                       <li>
                                           <div class="left-block">
-                                              <a href="#">
-                                              <img  alt="product" src="{{ $v_pro->product_image }}" width="600" /></a>
+                                              <a href="{{URL::to('/product-details/'.$v_pro->product_id)}}">
+                                                <img  alt="product" src="{{ $v_pro->product_image }}" width="600" />
+                                              </a>
                                               <div class="quick-view">
                                                       <a title="Add to my wishlist" class="heart" href="#"></a>
                                                       <a title="Add to compare" class="compare" href="#"></a>
                                                       <a title="Quick view" class="search" href="#"></a>
                                               </div>
-                                              <div class="add-to-cart">
-                                                  <a title="Add to Cart" href="#">Add to Cart</a>
-                                              </div>
+                                              <form action="{{ URL::to('/add-to-cart')}}" method="POST" role="form">
+                                                {{ csrf_field() }}
+
+                                                <div class="add-to-cart">
+                                                    <input type="hidden" name="product_id" value="{{ $v_pro->product_id}}">
+                                                    <input type="hidden" name="qty" value="1">
+                                                <button  type="submit">
+                                                    <a title="Add to Cart">Add to Cart</a>
+                                               </button>
+                                                </div>
+
+                                            </form>
                                           </div>
                                           <div class="right-block">
                                               <h5 class="product-name"><a href="#">{{ $v_pro->product_name}}</a></h5>
@@ -552,8 +564,9 @@ $new_product = DB::table('product')
                                                   <i class="fa fa-star"></i>
                                                   <i class="fa fa-star-half-o"></i>
                                               </div>
-                                              <p>{{ strip_tags($v_pro->product_description) }}</p>
+
                                           </div>
+
                                       </li>
 
                                   @endforeach

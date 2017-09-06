@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="{{URL::to('public/theme_assets/css/style.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{URL::to('public/theme_assets/css/responsive.css')}}" />
 
-    <title>Kute shop - themelot.net</title>
+    <title>Kute shop</title>
 </head>
 <body class="category-page">
 <!-- HEADER -->
@@ -70,7 +70,7 @@
     <div class="container main-header">
         <div class="row">
             <div class="col-xs-12 col-sm-3 logo">
-                <a href="{{URL::to('/')}}"><img alt="Kute shop - themelot.net" src="{{URL::to('public/theme_assets/images/logo.png')}}" /></a>
+                <a href="{{ URl::to('/') }}"><img alt="Kute shop - themelot.net" src="{{URL::to('public/theme_assets/images/logo.png')}}" /></a>
             </div>
             <div class="col-xs-7 col-sm-7 header-search-box">
                 <form class="form-inline">
@@ -87,16 +87,7 @@
                       <button type="submit" class="pull-right btn-search"></button>
                 </form>
             </div>
-
-<?php
-
-$cart_contents = Cart::content();
-
-// echo "<pre>";
-// print_r($cart_contents);
-// exit();
-
-?>
+<?php $cart_contents = Cart::content();?>
   <div id="cart-block" class="col-xs-5 col-sm-2 shopping-cart-box">
                 <a class="cart-link" href="{{URL::to('/show-cart')}}">
                     <span class="title">Shopping cart</span>
@@ -112,7 +103,7 @@ $cart_contents = Cart::content();
                                 <li class="product-info">
                                     <div class="p-left">
                                         <a href="{{URL::to('/delete-to-cart/'.$v_content->rowId)}}" class="remove_link"></a>
-                                        <a href="{{URL::to('/show-cart')}}">
+                                        <a href="#">
                                         <img class="img-responsive" src="{{  asset($v_content->options->image) }}" alt="p10">
                                         </a>
                                     </div>
@@ -244,7 +235,10 @@ $sub_cat = DB::table('category')
     </div>
 </div>
 <!-- end header -->
+<?php
+$contents = Cart::content();
 
+?>
 
 
 
@@ -255,46 +249,135 @@ $sub_cat = DB::table('category')
         <div class="breadcrumb clearfix">
             <a class="home" href="#" title="Return to Home">Home</a>
             <span class="navigation-pipe">&nbsp;</span>
-            <span class="navigation_page">Your shopping cart</span>
+            <span class="navigation_page">Checkout</span>
         </div>
         <!-- ./breadcrumb -->
         <!-- page heading-->
         <h2 class="page-heading no-line">
-            <span class="page-heading-title2">Shopping Cart Summary</span>
+            <span class="page-heading-title2">Checkout</span>
         </h2>
-        <!-- ../page heading-->
-        <div class="page-content page-order">
-            <ul class="step">
-                <li class="current-step"><span>01. Summary</span></li>
-                <li><span>02. Sign in</span></li>
-                <li><span>03. Address</span></li>
-                <li><span>04. Shipping</span></li>
-                <li><span>05. Payment</span></li>
-            </ul>
-            @if($cart_contents->count() == 0)
-            <div class="heading-counter warning ">Your shopping cart contains:
-                <span>{{ $cart_contents->count() }} items</span>
-            </div>
-            <br><br>
 
+<div class="page-content checkout-page">
+            <h3 class="checkout-sep">1. Checkout Method</h3>
+            <div class="box-border">
+                <div class="row">
 
-                <div class="cart_navigation">
-                    <a class="prev-btn" href="{{URL::to('/')}}">Continue shopping</a>
-                    <a class="next-btn" href="{{URL::to('/checkout')}}}">Proceed to checkout</a>
-                </div>
-
-            @else
-            <div class=" alert alert-primary">
-                <div class="heading-counter warning ">Your shopping cart contains:
-                    <span>{{ $cart_contents->count() }} items</span>
-                    <button class=" pull-right btn btn-danger"><a  style="color: #fff ;" href="{{URL::to('/empty-cart')}}">Empty Cart</a></button>
+                    <div class="col-sm-6">
+                        <h4>Login</h4>
+                        <p>Already registered? Please log in below:</p>
+                        <label>Email address</label>
+                        <input type="text" class="form-control input">
+                        <label>Password</label>
+                        <input type="password" class="form-control input">
+                        <p><a href="#">Forgot your password?</a></p>
+                        <button class="button">Login</button>
+                    </div>
 
                 </div>
             </div>
-            <br><br>
+            <h3 class="checkout-sep">2. Billing Infomations</h3>
+            <div class="box-border">
+                <form action="{{URL::to('/user-login-check')}}" method="POST">
+                        {{ csrf_field() }}
+                    <ul>
+                        <li class="row">
+                            <div class="col-sm-6">
+                                <label for="first_name" class="required">First Name</label>
+                                <input type="text" class="input form-control" name="first_name" id="first_name" required="1">
+                            </div><!--/ [col] -->
+                            <div class="col-sm-6">
+                                <label for="last_name" class="required">Last Name</label>
+                                <input type="text" name="last_name" class="input form-control" id="last_name" required="1">
+                            </div><!--/ [col] -->
+                        </li><!--/ .row -->
+                        <li class="row">
+                            <div class="col-sm-6">
+                                <label for="email_address" class="required">Email Address</label>
+                                <input type="text" class="input form-control" name="email_address" id="email_address" required="1">
+                            </div><!--/ [col] -->
+                            <div class="col-sm-6">
+                                <label for="company_name">Company Name</label>
+                                <input type="text" name="company_name" class="input form-control" id="company_name">
+                            </div><!--/ [col] -->
 
+                        </li><!--/ .row -->
+                        <li class="row">
+                            <div class="col-sm-6">
+                                <label for="password" class="required">Password</label>
+                                <input class="input form-control" type="password" name="password" id="password" required="1">
+                            </div><!--/ [col] -->
 
-            <div class="order-detail-content">
+                            <div class="col-sm-6">
+                                <label for="confirm" class="required">Confirm Password</label>
+                                <input class="input form-control" type="password" name="" id="confirm" required="1">
+                            </div><!--/ [col] -->
+                        </li><!--/ .row -->
+                        <li class="row">
+                            <div class="col-sm-6">
+                                <label for="telephone" class="required">Mobile No.</label>
+                                <input class="input form-control" type="text" name="mobile_number" id="telephone"  required="1">
+                            </div><!--/ [col] -->
+                            <div class="col-xs-6">
+
+                                <label for="address" class="required">Address</label>
+                                <input type="text" class="input form-control" name="address" id="address" required="1">
+
+                            </div><!--/ [col] -->
+
+                        </li><!-- / .row -->
+
+                        <li class="row">
+
+                            <div class="col-sm-6">
+
+                                <label for="city" class="required">City</label>
+                                <input class="input form-control" type="text" name="city" id="city" required="1">
+
+                            </div><!--/ [col] -->
+                             <div class="col-sm-6">
+
+                                <label for="postal_code" class="required">Zip/Postal Code</label>
+                                <input class="input form-control" type="text" name="zip_code" id="postal_code"  >
+                            </div><!--/ [col] -->
+
+                        </li><!--/ .row -->
+                        <button class="button pull-right">Continue</button>
+                    </ul>
+                </form>
+            </div>
+
+            <h3 class="checkout-sep">3. Shipping Method</h3>
+            <div class="box-border">
+                <ul class="shipping_method">
+                    <li>
+                        <p class="subcaption bold">Free Shipping</p>
+                        <label for="radio_button_3"><input type="radio" checked name="radio_3" id="radio_button_3">Free $0</label>
+                    </li>
+
+                    <li>
+                        <p class="subcaption bold">Free Shipping</p>
+                        <label for="radio_button_4"><input type="radio" name="radio_3" id="radio_button_4"> Standard Shipping $5.00</label>
+                    </li>
+                </ul>
+                <button class="button">Continue</button>
+            </div>
+            <h3 class="checkout-sep">4. Payment Information</h3>
+            <div class="box-border">
+                <ul>
+                    <li>
+                        <label for="radio_button_5"><input type="radio" checked name="radio_4" id="radio_button_5"> Check / Money order</label>
+                    </li>
+
+                    <li>
+
+                        <label for="radio_button_6"><input type="radio" name="radio_4" id="radio_button_6"> Credit card (saved)</label>
+                    </li>
+
+                </ul>
+                <button class="button">Continue</button>
+            </div>
+            <h3 class="checkout-sep">5. Order Review</h3>
+            <div class="box-border">
                 <table class="table table-bordered table-responsive cart_summary">
                     <thead>
                         <tr>
@@ -309,10 +392,10 @@ $sub_cat = DB::table('category')
                     </thead>
 
                     <tbody>
-                    @foreach($cart_contents as $v_content)
+                    @foreach($contents as $v_content)
                         <tr>
                             <td class="cart_product">
-                                <a href="#"><img src="{{  asset($v_content->options->image) }}" alt="Product"></a>
+                                <a href="#"><img src="assets/data/product-100x122.jpg" alt="Product"></a>
                             </td>
                             <td class="cart_description">
                                 <p class="product-name"><a href="#">{{ $v_content->name }} </a></p>
@@ -343,7 +426,7 @@ $sub_cat = DB::table('category')
                                 <a href="{{URL::to('/delete-to-cart/'.$v_content->rowId)}}">Delete item</a>
                             </td>
                         </tr>
-                    @endforeach
+
                     </tbody>
                     <tfoot>
                         <tr>
@@ -356,14 +439,12 @@ $sub_cat = DB::table('category')
                             <td colspan="2"><strong>BDT  &nbsp;{{ Cart::total() }}</strong></td>
                         </tr>
                     </tfoot>
-
+                    @endforeach
                 </table>
-                <div class="cart_navigation">
-                    <a class="prev-btn" href="{{URL::to('/')}}">Continue shopping</a>
-                    <a class="next-btn" href="{{URL::to('/checkout')}}">Proceed to checkout</a>
-                </div>
+
+                <button class="button pull-right">Place Order</button>
+
             </div>
-            @endif
         </div>
     </div>
 </div>
@@ -484,7 +565,6 @@ $sub_cat = DB::table('category')
 
                 <p class="text-center"> &copy; <?php echo date('Y') ?> | All Rights Reserved</p>
             </div><!-- /#footer-menu-box -->
-
 
         </div>
 </footer>

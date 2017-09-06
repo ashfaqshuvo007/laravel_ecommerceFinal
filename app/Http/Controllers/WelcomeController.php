@@ -42,14 +42,14 @@ class WelcomeController extends Controller {
 			->with('all_cat', $all_cat);
 
 	}
-	public function product_detail($id) {
+	public function product_details($id) {
 		$product_details = DB::table('product')
 			->where('product_id', $id)
 			->first();
 
 		$all_cat_info = DB::table('category')->get();
 
-		return view('product_detail')
+		return view('product_details')
 			->with('all_cat', $all_cat_info)
 			->with('pro_detail', $product_details);
 	}

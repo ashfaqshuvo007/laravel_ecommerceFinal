@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 use DB;
+use Illuminate\Http\Request;
+use Redirect;
+use Session;
 
 class WelcomeController extends Controller {
 	/**
@@ -24,6 +27,39 @@ class WelcomeController extends Controller {
 			->with('all_cat_info', $category_info)
 			->with('all_product_info', $product_info)
 			->with('pro_by_cat', $pro_by_cat);
+	}
+
+	public function user_login() {
+		$all_cat_info = DB::table('category')->get();
+		return view('user_login')->with('all_cat', $all_cat_info);
+	}
+
+	public function user_login_check(Request $request) {
+
+		$email_address = $request->email_address;
+		$password = md5($request->password);
+
+		$result = DB::table('users')
+			->where('email_address', $email_address)
+			->where('password', $password)
+			->first();
+		if ($result) {
+			Session::put('user_name', $result->first_name);
+			Session::put('user_id', $result->user_id);
+
+			return Redirect::to('/')->send();
+		} else {
+			Session::put('exception', 'Invalid Email or Password');
+			return Redirect::to('/user-login')->send();
+		}
+
+	}
+
+	public function user_logout() {
+		Session::put('user_name', NULL);
+		Session::put('user_id', NULL);
+		// Session::put('message',)
+		return Redirect::to('/')->send();
 	}
 
 	public function category($id) {

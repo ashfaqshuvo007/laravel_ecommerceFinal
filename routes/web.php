@@ -14,6 +14,9 @@
 Route::get('/', 'WelcomeController@index');
 Route::get('/category/{id}', 'WelcomeController@category');
 Route::get('/product-details/{id}', 'WelcomeController@product_details');
+Route::get('/user-login', 'WelcomeController@user_login');
+Route::post('/user-login-check', 'WelcomeController@user_login_check');
+Route::get('/user-logout', 'WelcomeController@user_logout');
 
 /*Cart ROUTES*/
 Route::post('/add-to-cart', 'CartController@add_to_cart');
@@ -24,6 +27,8 @@ Route::get('/empty-cart', 'CartController@empty_cart');
 
 /*CHECKOUT routes */
 Route::get('/checkout', 'CheckoutController@checkout');
+Route::post('/save-user', 'CheckoutController@save_customer');
+Route::get('/shipping-method', 'CheckoutController@shipping_method');
 
 /*Admin Routes*/
 Route::get('/admin-panel', 'AdminController@index');

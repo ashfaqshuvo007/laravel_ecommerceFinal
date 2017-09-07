@@ -56,9 +56,16 @@
             <div id="user-info-top" class="user-info pull-right">
                 <div class="dropdown">
                     <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><span>My Account</span></a>
-                    <ul class="dropdown-menu mega_dropdown" role="menu">
-                        <li><a href="login.html">Login</a></li>
-                        <li><a href="#">Compare</a></li>
+                     <ul class="dropdown-menu mega_dropdown" role="menu">
+                        <?php
+$user_id = Session::get('user_id');
+
+if ($user_id != null) {
+	?>
+                        <li><a href="{{URL::to('/user-logout')}}">Logout</a></li>
+                        <?php } else {?>
+                        <li><a href="{{URL::to('/user-login')}}">Login</a></li>
+                        <?php }?>
                         <li><a href="#">Wishlists</a></li>
                     </ul>
                 </div>

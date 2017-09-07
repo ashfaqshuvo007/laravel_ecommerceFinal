@@ -62,7 +62,7 @@ $user_id = Session::get('user_id');
 
 if ($user_id != null) {
 	?>
-                        <li><a href="{{URL::to('/uesr-logout')}}">Logout</a></li>
+                        <li><a href="{{URL::to('/user-logout')}}">Logout</a></li>
                         <?php } else {?>
                         <li><a href="{{URL::to('/user-login')}}">Login</a></li>
                         <?php }?>
@@ -260,12 +260,12 @@ $contents = Cart::content();
         <div class="breadcrumb clearfix">
             <a class="home" href="#" title="Return to Home">Home</a>
             <span class="navigation-pipe">&nbsp;</span>
-            <span class="navigation_page">Checkout</span>
+            <span class="navigation_page">Login/Register</span>
         </div>
         <!-- ./breadcrumb -->
         <!-- page heading-->
         <h2 class="page-heading no-line">
-            <span class="page-heading-title2">Checkout</span>
+            <span class="page-heading-title2">Login/Register</span>
         </h2>
 
 <div class="page-content checkout-page">
@@ -297,10 +297,10 @@ if ($message) {
                 </h4>
                         <p>Already registered? Please log in below:</p>
                         <form action="{{URL::to('/user-login-check')}}" method="POST" >
-                            {{csrf_field()}}
-                            <label>Email address</label>
+                            {{ csrf_field()}}
+                            <label for="email_address">Email address</label>
                             <input type="text" name="email_address"  class="form-control input">
-                            <label>Password</label>
+                            <label for="password">Password</label>
                             <input type="password" name="password" class="form-control input">
                             <!-- <p><a href="#">Forgot your password?</a></p> -->
                             <button class="button" type="submit">Login</button>
@@ -309,7 +309,6 @@ if ($message) {
 
                 </div>
             </div>
-
             <h3 class="checkout-sep">2. Registration</h3>
             <div class="box-border">
                 <form action="{{URL::to('/save-user')}}" method="POST">
@@ -376,7 +375,7 @@ if ($message) {
                             </div><!--/ [col] -->
 
                         </li><!--/ .row -->
-                        <button class="button pull-right" type="submit">Continue</button>
+                        <button class="button pull-right">Register</button>
                     </ul>
                 </form>
             </div>

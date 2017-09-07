@@ -21,12 +21,6 @@
         <!-- Custom styles -->
         <link href="{{URL::to('public/admin_assets/css/style.css')}}" rel="stylesheet">
         <link href="{{URL::to('public/admin_assets/css/style-responsive.css')}}" rel="stylesheet" />
-
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 -->
-        <!--[if lt IE 9]>
-        <script src="js/html5shiv.js"></script>
-        <script src="js/respond.min.js"></script>
-        <![endif]-->
     </head>
 
     <body class="login-img3-body">
@@ -38,7 +32,7 @@
 
             <div class="login-wrap">
                 <h4 style="color:red;">
-                    <?php
+<?php
 $exception = Session::get('exception');
 
 if ($exception) {
@@ -46,9 +40,9 @@ if ($exception) {
 	Session::put('exception', null);
 }
 ?>
-                </h4>
-                <h4 style="color:green;">
-                    <?php
+                    </h4>
+                    <h4 style="color:green;">
+                        <?php
 $message = Session::get('message');
 
 if ($message) {

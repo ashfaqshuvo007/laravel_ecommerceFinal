@@ -52,9 +52,16 @@
             <div id="user-info-top" class="user-info pull-right">
                 <div class="dropdown">
                     <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><span>My Account</span></a>
-                    <ul class="dropdown-menu mega_dropdown" role="menu">
-                        <li><a href="login.html">Login</a></li>
-                        <li><a href="#">Compare</a></li>
+                     <ul class="dropdown-menu mega_dropdown" role="menu">
+                        <?php
+$user_id = Session::get('user_id');
+
+if ($user_id != null) {
+	?>
+                        <li><a href="{{URL::to('/user-logout')}}">Logout</a></li>
+                        <?php } else {?>
+                        <li><a href="{{URL::to('/user-login')}}">Login</a></li>
+                        <?php }?>
                         <li><a href="#">Wishlists</a></li>
                     </ul>
                 </div>
@@ -628,8 +635,8 @@ $sub_cat = DB::table('category')
 
                                     </a>
                                     <div class="quick-view">
-                                            <!-- <a title="Add to my wishlist" class="heart" href="#"></a>
-                                            <a title="Add to compare" class="compare" href="#"></a> -->
+                                            <a title="Add to my wishlist" class="heart" href="#"></a>
+                                            <a title="Add to compare" class="compare" href="#"></a>
                                             <a title="Quick view" class="search" href="{{URL::to('/product-details/'.$v_pro_by_cat->product_id)}}"></a>
                                     </div>
                                      <form action="{{ URL::to('/add-to-cart')}}" method="POST" role="form">
@@ -646,7 +653,7 @@ $sub_cat = DB::table('category')
                                     </form>
                                 </div>
                                 <div class="right-block">
-                                    <strong><h5 class="product-name"><a href="{{URL::to('/product-detail/'.$v_pro_by_cat->product_id)}}">{{$v_pro_by_cat->product_name}}</a></h5></strong>
+                                    <strong><h5 class="product-name"><a href="{{URL::to('/product-details/'.$v_pro_by_cat->product_id)}}">{{$v_pro_by_cat->product_name}}</a></h5></strong>
                                     <div class="product-star">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
@@ -659,7 +666,7 @@ $sub_cat = DB::table('category')
                                         <span class="price old-price"> BDT {{$v_pro_by_cat->old_price}}</span>
                                     </div>
                                     <br><br>
-                                    <button class="btn btn-info pull-right"><a style="color: #fff; text-align: center;" href="{{URL::to('/product-detail/'.$v_pro_by_cat->product_id)}}">View more</a></button>
+                                    <button class="btn btn-info pull-right"><a style="color: #fff; text-align: center;" href="{{URL::to('/product-details/'.$v_pro_by_cat->product_id)}}">View more</a></button>
                                     <div class="info-orther">
                                         <!-- <p>Item Code: #453217907</p> -->
                                         <p class="availability">Availability: <span>In stock</span></p>

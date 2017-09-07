@@ -56,13 +56,13 @@
             <div id="user-info-top" class="user-info pull-right">
                 <div class="dropdown">
                     <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><span>My Account</span></a>
-                     <ul class="dropdown-menu mega_dropdown" role="menu">
+                    <ul class="dropdown-menu mega_dropdown" role="menu">
                         <?php
 $user_id = Session::get('user_id');
 
 if ($user_id != null) {
 	?>
-                        <li><a href="{{URL::to('/uesr-logout')}}">Logout</a></li>
+                        <li><a href="{{URL::to('/user-logout')}}">Logout</a></li>
                         <?php } else {?>
                         <li><a href="{{URL::to('/user-login')}}">Login</a></li>
                         <?php }?>
@@ -269,116 +269,114 @@ $contents = Cart::content();
         </h2>
 
 <div class="page-content checkout-page">
-            <h3 class="checkout-sep">1. Login</h3>
+<h3 class="checkout-sep">3. Shipping Method</h3>
             <div class="box-border">
-                <div class="row">
+                <ul class="shipping_method">
+                    <li>
+                        <p class="subcaption bold">Free Shipping</p>
+                        <label for="radio_button_3"><input type="radio" checked name="radio_3" id="radio_button_3">Free $0</label>
+                    </li>
 
-                    <div class="col-sm-6">
-                        <h4>Login</h4>
-                        <h4 style="color:red;">
-<?php
-$exception = Session::get('exception');
+                    <li>
+                        <p class="subcaption bold">Free Shipping</p>
+                        <label for="radio_button_4"><input type="radio" name="radio_3" id="radio_button_4"> Standard Shipping $5.00</label>
+                    </li>
+                </ul>
+                <button class="button">Continue</button>
+            </div>
+            <h3 class="checkout-sep">4. Payment Information</h3>
+            <div class="box-border">
+                <ul>
+                    <li>
+                        <label for="radio_button_5">
+                        <input type="radio" checked name="radio_4" id="radio_button_5"> Cash On Delivery</label>
+                    </li>
 
-if ($exception) {
-	echo $exception;
-	Session::put('exception', null);
-}
-?>
-                    </h4>
-                    <h4 style="color:green;">
-                        <?php
-$message = Session::get('message');
+                    <li>
 
-if ($message) {
-	echo $message;
-	Session::put('message', null);
-}
-?>
-                </h4>
-                        <p>Already registered? Please log in below:</p>
-                        <form action="{{URL::to('/user-login-check')}}" method="POST" >
-                            {{csrf_field()}}
-                            <label>Email address</label>
-                            <input type="text" name="email_address"  class="form-control input">
-                            <label>Password</label>
-                            <input type="password" name="password" class="form-control input">
-                            <!-- <p><a href="#">Forgot your password?</a></p> -->
-                            <button class="button" type="submit">Login</button>
-                        </form>
-                    </div>
+                        <label for="radio_button_6">
+                        <input type="radio" name="radio_4" id="radio_button_6"> Visa or Mastercard</label>
+                    </li>
+                    <li>
 
-                </div>
+                        <label for="radio_button_6">
+                        <input type="radio" name="radio_4" id="radio_button_6"> Credit card (saved)</label>
+                    </li>
+
+                </ul>
+                <button class="button">Continue</button>
             </div>
 
-            <h3 class="checkout-sep">2. Registration</h3>
+
+
+            <h3 class="checkout-sep">5. Order Review</h3>
             <div class="box-border">
-                <form action="{{URL::to('/save-user')}}" method="POST">
-                        {{ csrf_field() }}
-                    <ul>
-                        <li class="row">
-                            <div class="col-sm-6">
-                                <label for="first_name" class="required">First Name</label>
-                                <input type="text" class="input form-control" name="first_name" id="first_name" required="1">
-                            </div><!--/ [col] -->
-                            <div class="col-sm-6">
-                                <label for="last_name" class="required">Last Name</label>
-                                <input type="text" name="last_name" class="input form-control" id="last_name" required="1">
-                            </div><!--/ [col] -->
-                        </li><!--/ .row -->
-                        <li class="row">
-                            <div class="col-sm-6">
-                                <label for="email_address" class="required">Email Address</label>
-                                <input type="email" class="input form-control" name="email_address" id="email_address" required="1">
-                            </div><!--/ [col] -->
-                            <div class="col-sm-6">
-                                <label for="company_name">Company Name</label>
-                                <input type="text" name="company_name" class="input form-control" id="company_name">
-                            </div><!--/ [col] -->
+                <table class="table table-bordered table-responsive cart_summary">
+                    <thead>
+                        <tr>
+                            <th class="cart_product">Product</th>
+                            <th>Description</th>
+                            <th>Avail.</th>
+                            <th>Unit price</th>
+                            <th>Qty</th>
+                            <th>Total</th>
+                            <th  class="action"><i class="fa fa-trash-o"></i></th>
+                        </tr>
+                    </thead>
+<?php $contents = Cart::content();?>
+                    <tbody>
+                    @foreach($contents as $v_content)
+                        <tr>
+                            <td class="cart_product">
+                                <a href="#"><img src="assets/data/product-100x122.jpg" alt="Product"></a>
+                            </td>
+                            <td class="cart_description">
+                                <p class="product-name"><a href="#">{{ $v_content->name }} </a></p>
+                                <!-- <small class="cart_ref">SKU : #123654999</small><br>
+                                <small><a href="#">Color : Beige</a></small><br>
+                                <small><a href="#">Size : S</a></small> -->
+                            </td>
+                            <td class="cart_avail"><span class="label label-success">In stock</span></td>
+                            <td class="price"><span> BDT {{ $v_content->price }}</span></td>
+                            <td class="qty">
+                                <form action="{{ URL::to('/update-cart')}}" method="POST">
+                                    {{ csrf_field()}}
+                                    <input class="form-control input-sm" name="qty" type="number" value="{{ $v_content->qty }}">
+                                    <input class="form-control input-sm" name="rowid" type="hidden" value="{{ $v_content->rowId }}">
+                                    <button type="submit">
+                                        <div class="button-group">
+                                        <br>
+                                            <span class="btn btn-success" >Update</span>
+                                            <!-- <a class="btn-add-cart" href="#">Add to cart</a> -->
+                                        </div>
+                                    </button>
+                                </form>
+                            </td>
+                            <td class="price">
+                                <span>BDT {{ $v_content->price * $v_content->qty  }}</span>
+                            </td>
+                            <td class="action">
+                                <a href="{{URL::to('/delete-to-cart/'.$v_content->rowId)}}">Delete item</a>
+                            </td>
+                        </tr>
 
-                        </li><!--/ .row -->
-                        <li class="row">
-                            <div class="col-sm-6">
-                                <label for="password" class="required">Password</label>
-                                <input class="input form-control" type="password" name="password" id="password" required="1">
-                            </div><!--/ [col] -->
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2" rowspan="2"></td>
+                            <td colspan="3">Total products (in bdt) </td>
+                            <td colspan="2">BDT {{ $v_content->price * $v_content->qty  }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><strong>Total</strong></td>
+                            <td colspan="2"><strong>BDT  &nbsp;{{ Cart::total() }}</strong></td>
+                        </tr>
+                    </tfoot>
+                    @endforeach
+                </table>
 
-                            <div class="col-sm-6">
-                                <label for="confirm" class="required">Confirm Password</label>
-                                <input class="input form-control" type="password" name="" id="confirm" required="1">
-                            </div><!--/ [col] -->
-                        </li><!--/ .row -->
-                        <li class="row">
-                            <div class="col-sm-6">
-                                <label for="telephone" class="required">Mobile No.</label>
-                                <input class="input form-control" type="text" name="mobile_number" id="telephone"  required="1">
-                            </div><!--/ [col] -->
-                            <div class="col-xs-6">
+                <button class="button pull-right">Place Order</button>
 
-                                <label for="address" class="required">Address</label>
-                                <input type="text" class="input form-control" name="address" id="address" required="1">
-
-                            </div><!--/ [col] -->
-
-                        </li><!-- / .row -->
-
-                        <li class="row">
-
-                            <div class="col-sm-6">
-
-                                <label for="city" class="required">City</label>
-                                <input class="input form-control" type="text" name="city" id="city" required="1">
-
-                            </div><!--/ [col] -->
-                             <div class="col-sm-6">
-
-                                <label for="postal_code" class="required">Zip/Postal Code</label>
-                                <input class="input form-control" type="text" name="zip_code" id="postal_code"  >
-                            </div><!--/ [col] -->
-
-                        </li><!--/ .row -->
-                        <button class="button pull-right" type="submit">Continue</button>
-                    </ul>
-                </form>
             </div>
                <!--  @yield('content') -->
 

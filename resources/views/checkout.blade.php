@@ -20,7 +20,7 @@
 <!-- HEADER -->
 <div id="header" class="header">
     <div id="header" class="header">
-    <div class="top-header">
+    <div class="top-header" style="padding: 5px;">
         <div class="container">
             <div class="nav-top-links">
                 <a class="first-item" href="#"><img alt="phone" src="{{URL::to('public/theme_assets/images/phone.png')}}" />00-62-658-658</a>
@@ -55,14 +55,22 @@
 
             <div id="user-info-top" class="user-info pull-right">
                 <div class="dropdown">
-                    <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><span>My Account</span></a>
+<?php
+$user_id = Session::get('user_id');
+$user_name = Session::get('user_name');
+?>
+                    <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+                        <?php if ($user_id) {?>
+                       <span class="glyphicon glyphicon-user"> <?php echo strtoupper($user_name); ?></span>
+                        <?php } else {?>
+                        <span>My Account</span>
+                        <?php }?>
+                    </a>
                      <ul class="dropdown-menu mega_dropdown" role="menu">
                         <?php
-$user_id = Session::get('user_id');
-
-if ($user_id != null) {
+if ($user_id != NULL) {
 	?>
-                        <li><a href="{{URL::to('/uesr-logout')}}">Logout</a></li>
+                        <li><a href="{{URL::to('/user-logout')}}">Logout</a></li>
                         <?php } else {?>
                         <li><a href="{{URL::to('/user-login')}}">Login</a></li>
                         <?php }?>
@@ -121,6 +129,7 @@ if ($user_id != null) {
                                     <div class="p-right">
                                         <p class="p-name">{{ $v_content->name }}</p>
                                         <p class="p-rice">BDT {{ $v_content->price }}</p>
+                                        <p style="color:#FF5B84;">Qty - {{ $v_content->qty }}</p>
                                     </div>
                                 </li>
                                 @endforeach
@@ -296,7 +305,7 @@ if ($message) {
 ?>
                 </h4>
                         <p>Already registered? Please log in below:</p>
-                        <form action="{{URL::to('/user-login-check')}}" method="POST" >
+                        <form action="{{URL::to('/customer-login-check')}}" method="POST" >
                             {{csrf_field()}}
                             <label>Email address</label>
                             <input type="text" name="email_address"  class="form-control input">

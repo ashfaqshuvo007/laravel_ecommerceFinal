@@ -20,7 +20,7 @@
 <!-- HEADER -->
 <div id="header" class="header">
     <div id="header" class="header">
-    <div class="top-header">
+    <div class="top-header"  style="padding: 5px;">
         <div class="container">
             <div class="nav-top-links">
                 <a class="first-item" href="#"><img alt="phone" src="{{URL::to('public/theme_assets/images/phone.png')}}" />00-62-658-658</a>
@@ -55,7 +55,17 @@
 
             <div id="user-info-top" class="user-info pull-right">
                 <div class="dropdown">
-                    <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><span>My Account</span></a>
+                   <?php
+$user_id = Session::get('user_id');
+$user_name = Session::get('user_name');
+?>
+                    <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+                        <?php if ($user_id) {?>
+                       <span class="glyphicon glyphicon-user"> <?php echo strtoupper($user_name); ?></span>
+                        <?php } else {?>
+                        <span>My Account</span>
+                        <?php }?>
+                    </a>
                      <ul class="dropdown-menu mega_dropdown" role="menu">
                         <?php
 $user_id = Session::get('user_id');
@@ -77,7 +87,7 @@ if ($user_id != null) {
     <div class="container main-header">
         <div class="row">
             <div class="col-xs-12 col-sm-3 logo">
-                <a href="{{ URl::to('/') }}"><img alt="Kute shop - themelot.net" src="{{URL::to('public/theme_assets/images/logo.png')}}" /></a>
+                <a href="{{ URl::to('/') }}"><img alt="Kute shop" src="{{URL::to('public/theme_assets/images/logo.png')}}" /></a>
             </div>
             <div class="col-xs-7 col-sm-7 header-search-box">
                 <form class="form-inline">
@@ -121,6 +131,7 @@ if ($user_id != null) {
                                     <div class="p-right">
                                         <p class="p-name">{{ $v_content->name }}</p>
                                         <p class="p-rice">BDT {{ $v_content->price }}</p>
+                                        <p style="color:#FF5B84;">Qty - {{ $v_content->qty }}</p>
                                     </div>
                                 </li>
                                 @endforeach

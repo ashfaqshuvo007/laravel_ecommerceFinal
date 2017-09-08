@@ -4,24 +4,21 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrderedProductsTable extends Migration {
+class CreateOrderDetailsTable extends Migration {
 	/**
 	 * Run the migrations.
 	 *
 	 * @return void
 	 */
 	public function up() {
-		Schema::create('ordered_products', function (Blueprint $table) {
+		Schema::create('order_details', function (Blueprint $table) {
+			$table->increments('order_products_id');
 			$table->integer('order_id');
 			$table->integer('product_id');
-			// $table->foreign('order_id')
-			// 	->references('order_id')
-			// 	->on('orders')
-			// 	->onDelete('cascade');
-			// $table->foreign('product_id')
-			// 	->references('product_id')
-			// 	->on('product')
-			// 	->onDelete('cascade');
+			$table->string('product_name');
+			$table->float('product_price');
+			$table->integer('product_sale_quantity');
+
 			$table->timestamps();
 		});
 	}
@@ -32,6 +29,6 @@ class CreateOrderedProductsTable extends Migration {
 	 * @return void
 	 */
 	public function down() {
-		Schema::dropIfExists('ordered_products');
+		Schema::dropIfExists('order_details');
 	}
 }

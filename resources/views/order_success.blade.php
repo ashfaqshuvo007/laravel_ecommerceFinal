@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="{{URL::to('public/theme_assets/css/style.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{URL::to('public/theme_assets/css/responsive.css')}}" />
 
-    <title>Kute shop - themelot.net</title>
+    <title>Kute shop</title>
 </head>
 <body class="category-page">
 <!-- HEADER -->
@@ -55,7 +55,7 @@
 
             <div id="user-info-top" class="user-info pull-right">
                 <div class="dropdown">
-                 <?php
+                    <?php
 $user_id = Session::get('user_id');
 $user_name = Session::get('user_name');
 ?>
@@ -66,7 +66,7 @@ $user_name = Session::get('user_name');
                         <span>My Account</span>
                         <?php }?>
                     </a>
-                     <ul class="dropdown-menu mega_dropdown" role="menu">
+                    <ul class="dropdown-menu mega_dropdown" role="menu">
                         <?php
 $user_id = Session::get('user_id');
 
@@ -87,7 +87,7 @@ if ($user_id != null) {
     <div class="container main-header">
         <div class="row">
             <div class="col-xs-12 col-sm-3 logo">
-                <a href="{{URL::to('/')}}"><img alt="Kute shop - themelot.net" src="{{URL::to('public/theme_assets/images/logo.png')}}" /></a>
+                <a href="{{ URl::to('/') }}"><img alt="Kute shop - themelot.net" src="{{URL::to('public/theme_assets/images/logo.png')}}" /></a>
             </div>
             <div class="col-xs-7 col-sm-7 header-search-box">
                 <form class="form-inline">
@@ -105,15 +105,10 @@ if ($user_id != null) {
                 </form>
             </div>
 
-<?php
 
-$cart_contents = Cart::content();
+<?php $cart_contents = Cart::content();?>
 
-// echo "<pre>";
-// print_r($cart_contents);
-// exit();
 
-?>
   <div id="cart-block" class="col-xs-5 col-sm-2 shopping-cart-box">
                 <a class="cart-link" href="{{URL::to('/show-cart')}}">
                     <span class="title">Shopping cart</span>
@@ -129,7 +124,7 @@ $cart_contents = Cart::content();
                                 <li class="product-info">
                                     <div class="p-left">
                                         <a href="{{URL::to('/delete-to-cart/'.$v_content->rowId)}}" class="remove_link"></a>
-                                        <a href="{{URL::to('/show-cart')}}">
+                                        <a href="#">
                                         <img class="img-responsive" src="{{  asset($v_content->options->image) }}" alt="p10">
                                         </a>
                                     </div>
@@ -147,12 +142,7 @@ $cart_contents = Cart::content();
                             <span class="toal-price pull-right">BDT {{ Cart::total() }}</span>
                         </div>
                         <div class="cart-buttons">
-<?php $user_id = Session::get('user_id');
-if ($user_id == NULL) {?>
                             <a href="{{URL::to('/checkout')}}" class="btn-check-out">Checkout</a>
-                        <?php } else {?>
-                            <a href="{{URL::to('/shipping-method')}}" class="btn-check-out">Checkout</a>
-                            <?php }?>
                         </div>
                     </div>
                 </div>
@@ -267,7 +257,10 @@ $sub_cat = DB::table('category')
     </div>
 </div>
 <!-- end header -->
+<?php
+$contents = Cart::content();
 
+?>
 
 
 
@@ -275,118 +268,68 @@ $sub_cat = DB::table('category')
 <div class="columns-container">
     <div class="container" id="columns">
         <!-- breadcrumb -->
-        <div class="breadcrumb clearfix">
+       <!--  <div class="breadcrumb clearfix">
             <a class="home" href="#" title="Return to Home">Home</a>
             <span class="navigation-pipe">&nbsp;</span>
-            <span class="navigation_page">Your shopping cart</span>
-        </div>
+            <span class="navigation_page">Checkout</span>
+        </div> -->
         <!-- ./breadcrumb -->
         <!-- page heading-->
         <h2 class="page-heading no-line">
-            <span class="page-heading-title2">Shopping Cart Summary</span>
+            <span class="page-heading-title2">Order Success</span>
         </h2>
-        <!-- ../page heading-->
-        <div class="page-content page-order">
-            <ul class="step">
-                <li class="current-step"><span>01. Summary</span></li>
-                <li><span>02. Sign in</span></li>
-                <li><span>03. Address</span></li>
-                <li><span>04. Shipping</span></li>
-                <li><span>05. Payment</span></li>
-            </ul>
-            @if($cart_contents->count() == 0)
-            <div class="heading-counter warning ">Your shopping cart contains:
-                <span>{{ $cart_contents->count() }} items</span>
+
+        <div class="page-content checkout-page">
+
+
+
+            <div class="alert alert-success">
+
+              <strong>Your Order was Successful !</strong>
+              <p>Our customer service will contact you shortly ! &nbsp You will receive your product within next 3 to 5 working days</p>
             </div>
-            <br><br>
-
-
-                <div class="cart_navigation">
-                    <a class="prev-btn" href="{{URL::to('/')}}">Continue shopping</a>
-                    <a class="next-btn" href="{{URL::to('/checkout')}}}">Proceed to checkout</a>
-                </div>
-
-            @else
-            <div class=" alert alert-primary">
-                <div class="heading-counter warning ">Your shopping cart contains:
-                    <span>{{ $cart_contents->count() }} items</span>
-                    <button class=" pull-right btn btn-danger"><a  style="color: #fff ;" href="{{URL::to('/empty-cart')}}">Empty Cart</a></button>
-
-                </div>
-            </div>
-            <br><br>
-
-
-            <div class="order-detail-content">
-                <table class="table table-bordered table-responsive cart_summary">
+            <a class="btn btn-lg btn-info" href="{{URL::to('/')}}">Continue Shopping</a>
+            <div class="box-border">
+                <table class="table table-bordered table-responsive cart_summary text-center">
                     <thead>
                         <tr>
                             <th class="cart_product">Product</th>
                             <th>Description</th>
-                            <th>Avail.</th>
                             <th>Unit price</th>
                             <th>Qty</th>
                             <th>Total</th>
-                            <th  class="action"><i class="fa fa-trash-o"></i></th>
                         </tr>
                     </thead>
-
+<?php $contents = Cart::content();?>
                     <tbody>
-                    @foreach($cart_contents as $v_content)
+                    @foreach($contents as $v_content)
                         <tr>
                             <td class="cart_product">
-                                <a href="#"><img src="{{  asset($v_content->options->image) }}" alt="Product"></a>
+                                <a href="#"><img src="{{ asset($v_content->options->image) }}" alt="Product"></a>
                             </td>
                             <td class="cart_description">
                                 <p class="product-name"><a href="#">{{ $v_content->name }} </a></p>
-                                <!-- <small class="cart_ref">SKU : #123654999</small><br>
-                                <small><a href="#">Color : Beige</a></small><br>
-                                <small><a href="#">Size : S</a></small> -->
                             </td>
-                            <td class="cart_avail"><span class="label label-success">In stock</span></td>
                             <td class="price"><span> BDT {{ $v_content->price }}</span></td>
-                            <td class="qty">
-                                <form action="{{ URL::to('/update-cart')}}" method="POST">
-                                    {{ csrf_field()}}
-                                    <input class="form-control input-sm" name="qty" type="number" value="{{ $v_content->qty }}">
-                                    <input class="form-control input-sm" name="rowid" type="hidden" value="{{ $v_content->rowId }}">
-                                    <button type="submit">
-                                        <div class="button-group">
-                                        <br>
-                                            <span class="btn btn-success" >Update</span>
-                                            <!-- <a class="btn-add-cart" href="#">Add to cart</a> -->
-                                        </div>
-                                    </button>
-                                </form>
-                            </td>
+                            <td class="qty">{{ $v_content->qty }}</td>
                             <td class="price">
                                 <span>BDT {{ $v_content->price * $v_content->qty  }}</span>
                             </td>
-                            <td class="action">
-                                <a href="{{URL::to('/delete-to-cart/'.$v_content->rowId)}}">Delete item</a>
-                            </td>
+
                         </tr>
-                    @endforeach
+
                     </tbody>
                     <tfoot>
-                        <tr>
-                            <td colspan="2" rowspan="2"></td>
-                            <td colspan="3">Total products (in bdt) </td>
-                            <td colspan="2">BDT {{ $v_content->price * $v_content->qty  }}</td>
-                        </tr>
                         <tr>
                             <td colspan="3"><strong>Total</strong></td>
                             <td colspan="2"><strong>BDT  &nbsp;{{ Cart::total() }}</strong></td>
                         </tr>
                     </tfoot>
-
+                    @endforeach
                 </table>
-                <div class="cart_navigation">
-                    <a class="prev-btn" href="{{URL::to('/')}}">Continue shopping</a>
-                    <a class="next-btn" href="{{URL::to('/checkout')}}">Proceed to checkout</a>
-                </div>
             </div>
-            @endif
+               <!--  @yield('content') -->
+
         </div>
     </div>
 </div>
@@ -507,7 +450,6 @@ $sub_cat = DB::table('category')
 
                 <p class="text-center"> &copy; <?php echo date('Y') ?> | All Rights Reserved</p>
             </div><!-- /#footer-menu-box -->
-
 
         </div>
 </footer>

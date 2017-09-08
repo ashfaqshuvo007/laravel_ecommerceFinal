@@ -20,7 +20,7 @@
 <!-- HEADER -->
 <div id="header" class="header">
     <div id="header" class="header">
-    <div class="top-header">
+    <div class="top-header"  style="padding: 5px;">
         <div class="container">
             <div class="nav-top-links">
                 <a class="first-item" href="#"><img alt="phone" src="{{URL::to('public/theme_assets/images/phone.png')}}" />00-62-658-658</a>
@@ -55,7 +55,17 @@
 
             <div id="user-info-top" class="user-info pull-right">
                 <div class="dropdown">
-                    <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><span>My Account</span></a>
+                    <?php
+$user_id = Session::get('user_id');
+$user_name = Session::get('user_name');
+?>
+                    <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+                        <?php if ($user_id) {?>
+                       <span class="glyphicon glyphicon-user"> <?php echo strtoupper($user_name); ?></span>
+                        <?php } else {?>
+                        <span>My Account</span>
+                        <?php }?>
+                    </a>
                     <ul class="dropdown-menu mega_dropdown" role="menu">
                         <?php
 $user_id = Session::get('user_id');
@@ -121,6 +131,7 @@ if ($user_id != null) {
                                     <div class="p-right">
                                         <p class="p-name">{{ $v_content->name }}</p>
                                         <p class="p-rice">BDT {{ $v_content->price }}</p>
+                                        <p style="color:#FF5B84;">Qty - {{ $v_content->qty }}</p>
                                     </div>
                                 </li>
                                 @endforeach
@@ -286,25 +297,22 @@ $contents = Cart::content();
             </div>
             <h3 class="checkout-sep">4. Payment Information</h3>
             <div class="box-border">
-                <ul>
-                    <li>
-                        <label for="radio_button_5">
-                        <input type="radio" checked name="radio_4" id="radio_button_5"> Cash On Delivery</label>
-                    </li>
+                <form action="{{URL::to('/place-order')}}" method="POST">
+                    {{csrf_field()}}
+                    <ul>
+                        <li>
+                            <label for="radio_button_5">
+                            <input type="radio" checked name="payment_type" value="cash_on_delivery" id="radio_button_5"> Cash On Delivery</label>
+                        </li>
 
-                    <li>
+                        <li>
 
-                        <label for="radio_button_6">
-                        <input type="radio" name="radio_4" id="radio_button_6"> Visa or Mastercard</label>
-                    </li>
-                    <li>
-
-                        <label for="radio_button_6">
-                        <input type="radio" name="radio_4" id="radio_button_6"> Credit card (saved)</label>
-                    </li>
-
-                </ul>
-                <button class="button">Continue</button>
+                            <label for="radio_button_6">
+                            <input type="radio" name="payment_type" value="paypal" id="radio_button_6">Paypal</label>
+                        </li>
+                    </ul>
+                    <button class="button" type="submit">Continue</button>
+                </form>
             </div>
 
 

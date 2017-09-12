@@ -63,3 +63,9 @@ Route::get('/published-manufacturer/{id}', 'SuperAdminController@published_manuf
 Route::get('/delete-manufacturer/{id}', 'SuperAdminController@delete_manufacturer');
 Route::get('/edit-manufacturer/{id}', 'SuperAdminController@edit_manufacturer');
 Route::post('/update-manufacturer', 'SuperAdminController@update_manufacturer');
+
+/*ORDER ROUTES*/
+Route::get('/show-order', 'OrderController@show_order');
+Route::get('/show-invoice/{id}', 'OrderController@show_invoice');
+Route::get('/processed-order/{id}', 'OrderController@processed_order');
+Route::get('delivered-order/{id}', 'OrderController@delivered_order');

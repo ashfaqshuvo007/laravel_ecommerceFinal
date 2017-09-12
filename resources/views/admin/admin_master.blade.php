@@ -346,12 +346,21 @@
                                 <span>Add Manufacturer</span>
                             </a>
                         </li>
+
                         <li class="">
                             <a class="" href="{{URL::to('/manage-manufacturer')}}">
                                 <i class="icon_table"></i>
                                 <span>Manage Manufacturer</span>
                             </a>
                         </li>
+                        <li class="">
+                            <a class="" href="{{URL::to('/show-order')}}">
+                                <i class="icon_table"></i>
+                                <span>Manage Order</span>
+                            </a>
+                        </li>
+
+
                     </ul>
                     <!-- sidebar menu end-->
                 </div>

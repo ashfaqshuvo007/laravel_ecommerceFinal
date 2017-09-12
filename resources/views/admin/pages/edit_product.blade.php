@@ -4,11 +4,11 @@
 <section class="wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h3 class="page-header"><i class="fa fa-file-text-o"></i> Edit Categories</h3>
+            <h3 class="page-header"><i class="fa fa-file-text-o"></i> Edit Products</h3>
             <ol class="breadcrumb">
                 <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
                 <li><i class="icon_document_alt"></i>Forms</li>
-                <li><i class="fa fa-file-text-o"></i>Form elements</li>
+
             </ol>
         </div>
     </div>
@@ -27,7 +27,7 @@ if ($message) {
             </h3>
             <section class="panel">
                 <header class="panel-heading">
-                    Edit Categories
+                    Edit Products
                 </header>
                 <div class="panel-body">
 

@@ -118,7 +118,7 @@ class CheckoutController extends Controller {
 	}
 
 	public function order_success() {
-
+		Cart::destroy();
 		$all_cat_info = DB::table('category')->get();
 		return view('order_success')->with('all_cat', $all_cat_info);
 

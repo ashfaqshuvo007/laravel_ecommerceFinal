@@ -546,10 +546,12 @@ $new_product = DB::table('product')
 
                                   @foreach($pro_by_cat as $v_pro)
 
+                                  <?php $pro = DB::table('product')->where('category_id', $v_pro->category_id)->first();?>
+
                                       <li>
                                           <div class="left-block">
-                                              <a href="{{URL::to('/product-details/'.$v_pro->product_id)}}">
-                                                <img  alt="product" src="{{ $v_pro->product_image }}" width="600" />
+                                              <a href="{{URL::to('/product-details/'.$pro->product_id)}}">
+                                                <img  alt="product" src="{{ $pro->product_image }}" width="600" />
                                               </a>
                                               <div class="quick-view">
                                                       <a title="Add to my wishlist" class="heart" href="#"></a>
@@ -560,7 +562,7 @@ $new_product = DB::table('product')
                                                 {{ csrf_field() }}
 
                                                 <div class="add-to-cart">
-                                                    <input type="hidden" name="product_id" value="{{ $v_pro->product_id}}">
+                                                    <input type="hidden" name="product_id" value="{{ $pro->product_id}}">
                                                     <input type="hidden" name="qty" value="1">
                                                 <button  type="submit">
                                                     <a title="Add to Cart">Add to Cart</a>
@@ -570,9 +572,9 @@ $new_product = DB::table('product')
                                             </form>
                                           </div>
                                           <div class="right-block">
-                                              <h5 class="product-name"><a href="#">{{ $v_pro->product_name}}</a></h5>
+                                              <h5 class="product-name"><a href="#">{{ $pro->product_name}}</a></h5>
                                               <div class="content_price">
-                                                  <span class="price product-price">BDT {{ $v_pro->new_price}}</span>
+                                                  <span class="price product-price">BDT {{ $pro->new_price}}</span>
 
                                               </div>
                                               <div class="product-star">
@@ -588,6 +590,152 @@ $new_product = DB::table('product')
                                       </li>
 
                                   @endforeach
+
+                                </ul>
+
+
+                            </div>
+                            <!-- tab product -->
+                            <div class="tab-panel" id="tab-5">
+                                <ul class="product-list owl-carousel" data-dots="false" data-loop="true" data-nav = "true" data-margin = "0" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":4'>
+                                    <li>
+                                        <div class="left-block">
+                                            <a href="#">
+                                            <img class="img-responsive" alt="product" src="{{URL::to('public/theme_assets/data/04_nice-dress.jpg')}}" /></a>
+                                            <div class="quick-view">
+                                                    <a title="Add to my wishlist" class="heart" href="#"></a>
+                                                    <a title="Add to compare" class="compare" href="#"></a>
+                                                    <a title="Quick view" class="search" href="#"></a>
+                                            </div>
+                                            <div class="add-to-cart">
+                                                <a title="Add to Cart" href="#">Add to Cart</a>
+                                            </div>
+                                        </div>
+                                        <div class="right-block">
+                                            <h5 class="product-name"><a href="#">Nice Dress</a></h5>
+                                            <div class="content_price">
+                                                <span class="price product-price">$38,95</span>
+                                                <span class="price old-price">$52,00</span>
+                                            </div>
+                                            <div class="product-star">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-half-o"></i>
+                                            </div>
+
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+           </div>
+
+        </div>
+          @else
+          <div class="category-featured">
+            <nav class="navbar nav-menu nav-menu-red show-brand">
+              <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                  <div class="navbar-brand"><a href="#">{{$v_cat->category_name}}</a></div>
+                  <span class="toggle-menu"></span>
+            <?php $sub_cat = DB::table('category')->where('parent_id', $v_cat->category_id)->get()?>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse">
+                  <ul class="nav navbar-nav">
+                    <li class="active"><a data-toggle="tab" href="#tab-4">Best Seller</a></li>
+                    <li><a data-toggle="tab" href="#tab-5">Most Viewed</a></li>
+                    @foreach($sub_cat as $v_sub_cat)
+                    <li><a href="#">{{ $v_sub_cat->category_name}}</a></li>
+                    @endforeach
+                  </ul>
+                </div><!-- /.navbar-collapse -->
+              </div><!-- /.container-fluid -->
+              <div id="elevator-1" class="floor-elevator">
+                    <a href="#" class="btn-elevator up disabled fa fa-angle-up"></a>
+                    <a href="#elevator-2" class="btn-elevator down fa fa-angle-down"></a>
+              </div>
+            </nav>
+            <!-- <div class="category-banner">
+                <div class="col-sm-6 banner">
+                    <a href="#"><img alt="ads2" class="img-responsive" src="{{URL::to('public/theme_assets/data/ads2.jpg')}}" /></a>
+                </div>
+                <div class="col-sm-6 banner">
+                    <a href="#"><img alt="ads2" class="img-responsive" src="{{URL::to('public/theme_assets/data/ads3.jpg')}}" /></a>
+                </div>
+           </div> -->
+
+
+           <div class="product-featured clearfix">
+                <div class="banner-featured">
+                    <div class="featured-text"><span>featured</span></div>
+                    <div class="banner-img">
+                        <a href="#"><img alt="Featurered 1" src="{{ $v_cat->category_image }}" /></a>
+                    </div>
+                </div>
+
+                <div class="product-featured-content">
+                    <div class="product-featured-list">
+                        <div class="tab-container">
+                            <!-- tab product -->
+                            <div class="tab-panel active" id="tab-4">
+
+
+
+                                <ul class="product-list owl-carousel" data-dots="false" data-loop="true" data-nav = "true" data-margin = "0" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":4'>
+
+
+
+                                  <?php $pro = DB::table('product')->where('category_id', $v_pro->category_id)->first();?>
+
+                                      <li>
+                                          <div class="left-block">
+                                              <a href="{{URL::to('/product-details/'.$pro->product_id)}}">
+                                                <img  alt="product" src="{{ $pro->product_image }}" width="600" />
+                                              </a>
+                                              <div class="quick-view">
+                                                      <a title="Add to my wishlist" class="heart" href="#"></a>
+                                                      <a title="Add to compare" class="compare" href="#"></a>
+                                                      <a title="Quick view" class="search" href="#"></a>
+                                              </div>
+                                              <form action="{{ URL::to('/add-to-cart')}}" method="POST" role="form">
+                                                {{ csrf_field() }}
+
+                                                <div class="add-to-cart">
+                                                    <input type="hidden" name="product_id" value="{{ $pro->product_id}}">
+                                                    <input type="hidden" name="qty" value="1">
+                                                <button  type="submit">
+                                                    <a title="Add to Cart">Add to Cart</a>
+                                               </button>
+                                                </div>
+
+                                            </form>
+                                          </div>
+                                          <div class="right-block">
+                                              <h5 class="product-name"><a href="#">{{ $pro->product_name}}</a></h5>
+                                              <div class="content_price">
+                                                  <span class="price product-price">BDT {{ $pro->new_price}}</span>
+
+                                              </div>
+                                              <div class="product-star">
+                                                  <i class="fa fa-star"></i>
+                                                  <i class="fa fa-star"></i>
+                                                  <i class="fa fa-star"></i>
+                                                  <i class="fa fa-star"></i>
+                                                  <i class="fa fa-star-half-o"></i>
+                                              </div>
+
+                                          </div>
+
+                                      </li>
+
 
                                 </ul>
 

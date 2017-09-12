@@ -20,7 +20,7 @@ class WelcomeController extends Controller {
 
 		$pro_by_cat = DB::table('product')
 			->join('category', 'product.category_id', '=', 'category.category_id')
-			->select('product.*', 'category.category_name')
+			->select('product.*', 'category.category_id')
 			->get();
 
 		return view('layout')
